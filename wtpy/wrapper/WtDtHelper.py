@@ -28,7 +28,7 @@ class WtDataHelper:
     # 构造函数，传入动态库名
     def __init__(self):
         paths = os.path.split(__file__)
-        dllname = ph.getModule("WtDtHelper")
+        dllname = ph.getModule("ZtDtHelper")
         a = (paths[:-1] + (dllname,))
         _path = os.path.join(*a)
         self.api = cdll.LoadLibrary(_path)

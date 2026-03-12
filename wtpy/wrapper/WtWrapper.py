@@ -28,7 +28,7 @@ class WtWrapper:
     def __init__(self, engine):
         self._engine = engine
         paths = os.path.split(__file__)
-        dllname = ph.getModule("WtPorter")
+        dllname = ph.getModule("ZtPorter")
         a = (paths[:-1] + (dllname,))
         _path = os.path.join(*a)
         self.api = cdll.LoadLibrary(_path)

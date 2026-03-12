@@ -22,7 +22,7 @@ class WtDtServoApi:
     # 构造函数, 传入动态库名
     def __init__(self):
         paths = os.path.split(__file__)
-        dllname = ph.getModule("WtDtServo")
+        dllname = ph.getModule("ZtDtServo")
         a = (paths[:-1] + (dllname,))
         _path = os.path.join(*a)
         self.api = cdll.LoadLibrary(_path)

@@ -21,7 +21,7 @@ class WtMQWrapper:
     def __init__(self, mgr):
         self._mgr = mgr
         paths = os.path.split(__file__)
-        dllname = ph.getModule("WtMsgQue")
+        dllname = ph.getModule("ZtMsgQue")
         a = (paths[:-1] + (dllname,))
         _path = os.path.join(*a)
         self.api = cdll.LoadLibrary(_path)

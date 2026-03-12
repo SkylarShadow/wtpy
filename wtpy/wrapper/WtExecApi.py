@@ -12,7 +12,7 @@ class WtExecApi:
 
     def __init__(self):
         paths = os.path.split(__file__)
-        dllname = ph.getModule("WtExecMon")
+        dllname = ph.getModule("ZtExecMon")
         a = (paths[:-1] + (dllname,))
         _path = os.path.join(*a)
         self.api = cdll.LoadLibrary(_path)
