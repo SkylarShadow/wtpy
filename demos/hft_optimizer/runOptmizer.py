@@ -8,7 +8,7 @@ def runBaseOptimizer():
     optimizer = WtHftOptimizer(worker_num=1)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
-    optimizer.set_cpp_strategy(r"../Strategies/WtHftStraFact.dll","HftDemo","HFT_")
+    optimizer.set_cpp_strategy(r"../Strategies/ZtHftStraFact.dll","HftDemo","HFT_")
     # 添加固定参数
     optimizer.add_fixed_param(name="barCnt", val=50)
     optimizer.add_fixed_param(name="period", val="m5")

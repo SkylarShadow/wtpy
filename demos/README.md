@@ -163,7 +163,7 @@ Python下的demo主要演示不同环境下不同组件的使用<br>
         >    "fees":"fees_stk.json",    //佣金模板
         >    "riskmon":{                //组合风控设置
         >        "active":true,
-        >        "module":"WtRiskMonFact.dll",  //风控策略模板名
+        >        "module":"ZtRiskMonFact.dll",  //风控策略模板名
         >        "name":"SimpleRiskMon",        //风控策略名，框架会根据这个策略名创建风控策略实例
         >        "calc_span":5,                 //以下是风控策略自己的参数
         >        "risk_span": 30,
