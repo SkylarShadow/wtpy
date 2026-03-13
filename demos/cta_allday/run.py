@@ -1,5 +1,5 @@
-from wtpy import WtEngine,EngineType
-from wtpy import BaseExtExecuter
+from ztpy import ZtEngine,EngineType
+from ztpy import BaseExtExecuter
 
 import sys
 import time
@@ -20,7 +20,7 @@ class MyExecuter(BaseExtExecuter):
 
 if __name__ == "__main__":
     #创建一个运行环境，并加入策略
-    env = WtEngine(EngineType.ET_CTA)
+    env = ZtEngine(EngineType.ET_CTA)
     env.init('./common/', "config.yaml", 
         contractfile="okex_tickers.json",
         sessionfile="btc_sessions.json",

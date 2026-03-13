@@ -1,16 +1,16 @@
-from wtpy.monitor import WtBtSnooper
-from wtpy import WtDtServo
+from ztpy.monitor import ZtBtSnooper
+from ztpy import ZtDtServo
 
 def testBtSnooper():    
 
-    dtServo = WtDtServo()
+    dtServo = ZtDtServo()
     # 这里配置的是基础数据文件目录
     dtServo.setBasefiles(folder="E:\\gitlocal\\MyStras\\CTA\\common\\")
 
     # 这里配置的是datakit落地的数据目录
     dtServo.setStorage(path='E:/storage/')
 
-    snooper = WtBtSnooper(dtServo)
+    snooper = ZtBtSnooper(dtServo)
     snooper.run_as_server(port=8081, host="0.0.0.0")
 
 testBtSnooper()

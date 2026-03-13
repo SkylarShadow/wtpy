@@ -1,6 +1,6 @@
-from wtpy import WtDtServo
+from ztpy import ZtDtServo
 
-dtServo = WtDtServo()
+dtServo = ZtDtServo()
 dtServo.setBasefiles(folder="../common/")
 dtServo.setStorage(path='../storage/')
 

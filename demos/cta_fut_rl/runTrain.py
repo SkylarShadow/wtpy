@@ -3,9 +3,9 @@ import numpy as np
 # from gym import Env
 # from gym.spaces import Box
 
-from wtpy.CtaContext import CtaContext
-from wtpy.StrategyDefs import BaseCtaStrategy
-from wtpy.WtBtEngine import WtBtEngine, EngineType
+from ztpy.CtaContext import CtaContext
+from ztpy.StrategyDefs import BaseCtaStrategy
+from ztpy.ZtBtEngine import ZtBtEngine, EngineType
 
 class EnvStrategy(BaseCtaStrategy):
     def __init__(self, name:str, code:str, period:str, count:int):
@@ -38,7 +38,7 @@ class EnvStrategy(BaseCtaStrategy):
 
 
 
-class WtEnv():
+class ZtEnv():
     def __init__(self) -> None:
         super().__init__()
 
@@ -46,7 +46,7 @@ class WtEnv():
         self._strategy = None
 
         #创建一个运行环境
-        self._engine_:WtBtEngine = WtBtEngine(EngineType.ET_CTA)
+        self._engine_:ZtBtEngine = ZtBtEngine(EngineType.ET_CTA)
         self._engine_.init('../common/', "configbt.yaml")
         self._engine_.configBacktest(201909100930,201912011500)
         self._engine_.configBTStorage(mode="csv", path="../storage/")
@@ -104,7 +104,7 @@ if __name__ == '__main__':
     #     print(obs, reward, done, info)
     # env.close()
 
-    env = WtEnv()
+    env = ZtEnv()
     for i in range(10): #模拟训练10次
         print('第%s次训练'%i)
         obs = env.reset()

@@ -1,5 +1,5 @@
-from wtpy import WtBtEngine,EngineType
-from wtpy.apps import WtBtAnalyst
+from ztpy import ZtBtEngine,EngineType
+from ztpy.apps import ZtBtAnalyst
 from ConsoleIdxWriter import ConsoleIdxWriter
 
 import sys
@@ -10,7 +10,7 @@ from StraCtaUnitTest import StraCtaUnitTest
 
 if __name__ == "__main__":
     #创建一个运行环境，并加入策略
-    engine = WtBtEngine(EngineType.ET_CTA)
+    engine = ZtBtEngine(EngineType.ET_CTA)
     engine.init('../common/', "configbt.yaml")
     engine.configBacktest(201909100930,201912011500)
     engine.configBTStorage(mode="csv", path="../storage/")
@@ -22,7 +22,7 @@ if __name__ == "__main__":
 
     engine.run_backtest()
 
-    analyst = WtBtAnalyst()
+    analyst = ZtBtAnalyst()
     analyst.add_strategy("pydt_IF", folder="./outputs_bt/", init_capital=500000, rf=0.02, annual_trading_days=240)
     analyst.run()
 

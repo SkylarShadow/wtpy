@@ -1,7 +1,7 @@
 import time
-from wtpy import WtDtEngine
+from ztpy import ZtDtEngine
 
-from wtpy.ExtModuleDefs import BaseExtDataDumper
+from ztpy.ExtModuleDefs import BaseExtDataDumper
 
 class MyDataDumper(BaseExtDataDumper):
     def __init__(self, id:str):
@@ -12,7 +12,7 @@ class MyDataDumper(BaseExtDataDumper):
         加载历史K线（回测、实盘）
         @stdCode    合约代码，格式如CFFEX.IF.2106
         @period     周期，m1/m5/d1
-        @bars       回调函数，WTSBarStruct的指针
+        @bars       回调函数，ZTSBarStruct的指针
         @count      数据条数
         '''
         print("dumping %s bars of %s via extended dumper" % (period, stdCode))
@@ -23,7 +23,7 @@ class MyDataDumper(BaseExtDataDumper):
         加载历史K线（只在回测有效，实盘只提供当日落地的）
         @stdCode    合约代码，格式如CFFEX.IF.2106
         @uDate      日期，格式如yyyymmdd
-        @ticks      回调函数，WTSTickStruct的指针
+        @ticks      回调函数，ZTSTickStruct的指针
         @count      数据条数
         '''
         print("dumping ticks on %d of %s via extended dumper" % (uDate, stdCode))
@@ -31,7 +31,7 @@ class MyDataDumper(BaseExtDataDumper):
 
 def test_ext_dumper():
     #创建一个运行环境，并加入策略
-    engine = WtDtEngine()
+    engine = ZtDtEngine()
     engine.add_extended_data_dumper(MyDataDumper("dumper"))
     engine.initialize("dtcfg.yaml", "logcfgdt.yaml")
     

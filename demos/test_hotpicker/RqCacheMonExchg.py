@@ -1,4 +1,4 @@
-from wtpy.apps import WtCacheMon
+from ztpy.apps import WtCacheMon
 import rqdatac as rq
 import datetime
 import urllib
@@ -181,7 +181,7 @@ if __name__ == '__main__':
     # 从datakit落地的行情快照直接读取
     # cacher = WtCacheMonSS("../storage/his/snapshot/")
 
-    picker = hotpicker.WtHotPicker(hotFile=hotFile, secFile=secFile)
+    picker = hotpicker.ZtHotPicker(hotFile=hotFile, secFile=secFile)
     picker.set_cacher(cacher)
 
     sDate = start_date

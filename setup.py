@@ -12,9 +12,9 @@ from shutil import rmtree
 from setuptools import find_packages, setup, Command, Distribution
 
 # Package meta-data.
-NAME = 'wtpy'
+NAME = 'ztpy'
 DESCRIPTION = 'Python Sub Framework Of WonderTrader'
-URL = 'https://github.com/wondertrader/wtpy'
+URL = 'https://github.com/wondertrader/ztpy'
 EMAIL = 'silencesword@foxmail.com'
 AUTHOR = 'Wesley Liu'
 REQUIRES_PYTHON = '>=3.8.0'
@@ -119,7 +119,7 @@ setup(
     url=URL,
     packages=find_packages(),
     # If your package is a single module, use this instead of 'packages':
-    #py_modules=['wtpy'],
+    #py_modules=['ztpy'],
 
     # entry_points={
     #     'console_scripts': ['mycli=mymodule:cli'],

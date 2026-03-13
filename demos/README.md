@@ -21,13 +21,13 @@ Python下的demo主要演示不同环境下不同组件的使用<br>
 + test_dataexts     数据扩展模块demo √
 + test_datahelper   数据辅助模块demo √
 + test_extmodules   python外接行情和执行模块demo √
-+ test_hotpicker    WtHotPicker的用法示例 √
-+ test_monitor      WtMonSvr的用法示例 √
++ test_hotpicker    ZtHotPicker的用法示例 √
++ test_monitor      ZtMonSvr的用法示例 √
 + cta_unit_test  CTA策略接口的单元测试demo √
 
 # 如何使用这些demo
-+ 首先确认本地安装的是 *Python3.6* 以上的版本，32位、64位都可以，wtpy子框架会根据Python的版本自动选择对应的底层
-+ 然后安装*WonderTrader*上的*Python*子框架[***wtpy***](https://pypi.org/project/wtpy/)(version >= v0.3.2)
++ 首先确认本地安装的是 *Python3.6* 以上的版本，32位、64位都可以，ztpy子框架会根据Python的版本自动选择对应的底层
++ 然后安装*WonderTrader*上的*Python*子框架[***ztpy***](https://pypi.org/project/ztpy/)(version >= v0.3.2)
 + 如何运行回测demo
     
     > 直接运行目录下的 *run.py* 即可

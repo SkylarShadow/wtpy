@@ -1,11 +1,11 @@
 import sys
-from wtpy import BaseExtParser, BaseExtExecuter
-from wtpy import WTSTickStruct
+from ztpy import BaseExtParser, BaseExtExecuter
+from ztpy import ZTSTickStruct
 from ctypes import byref
 import threading
 import time
 
-from wtpy import WtEngine,EngineType
+from ztpy import ZtEngine,EngineType
 sys.path.append('../Strategies')
 from DualThrust import StraDualThrust
 
@@ -25,7 +25,7 @@ class MyParser(BaseExtParser):
         super().__init__(id)
         self.__worker__ = None
 
-    def init(self, engine:WtEngine):
+    def init(self, engine:ZtEngine):
         '''
         初始化
         '''
@@ -33,7 +33,7 @@ class MyParser(BaseExtParser):
 
     def random_sim(self):
         while True:
-            curTick = WTSTickStruct()
+            curTick = ZTSTickStruct()
             curTick.code = bytes("IF2106", encoding="UTF8")
             curTick.exchg = bytes("CFFEX", encoding="UTF8")
 
@@ -83,7 +83,7 @@ class MyParser(BaseExtParser):
 
 if __name__ == "__main__":
     #创建一个运行环境，并加入策略
-    engine = WtEngine(EngineType.ET_CTA)
+    engine = ZtEngine(EngineType.ET_CTA)
     engine.init('../common/', "config.yaml")
     
     straInfo = StraDualThrust(name='pydt_au', code="SHFE.au.HOT", barCnt=50, period="m5", days=30, k1=0.2, k2=0.2, isForStk=False)

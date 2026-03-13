@@ -1,12 +1,12 @@
 import rqdatac as rq
-from wtpy.WtCoreDefs import WTSBarStruct, WTSTickStruct
-from wtpy.wrapper import WtDataHelper
+from ztpy.ZtCoreDefs import ZTSBarStruct, ZTSTickStruct
+from ztpy.wrapper import ZtDataHelper
 import pandas as pd
 from tqdm import tqdm
 import os
 class Ifeed(object):
     def __init__(self):
-        self.dthelper = WtDataHelper()
+        self.dthelper = ZtDataHelper()
         self.period_map = {"m1":"min1","m5":"min5","d":"day","tick":"ticks"}
         self.frequency_map = {
             "m1":"1m",
@@ -43,7 +43,7 @@ class Ifeed(object):
             
     def cover_d_bar(self,df):
         count = len(df)
-        BUFFER = WTSBarStruct * count
+        BUFFER = ZTSBarStruct * count
         buffer = BUFFER()
         for index, row in tqdm(df.iterrows()):
             curBar = buffer[index]
@@ -59,7 +59,7 @@ class Ifeed(object):
     
     def cover_m_bar(self,df):
         count = len(df)
-        BUFFER = WTSBarStruct * count
+        BUFFER = ZTSBarStruct * count
         buffer = BUFFER()
         for index, row in tqdm(df.iterrows()):
             curBar = buffer[index]
@@ -75,7 +75,7 @@ class Ifeed(object):
         
     def cover_tick(self,df):
         count = len(df)
-        BUFFER = WTSTickStruct * count
+        BUFFER = ZTSTickStruct * count
         buffer = BUFFER()
         for index, row in tqdm(df.iterrows()):
             curTick = buffer[index]
@@ -306,6 +306,6 @@ if __name__ == '__main__':
     feed.store_his_bar(storage_path,"SHFE.ni.2201",start_date="20211225",end_date="20220101",frequency="m1",skip_saved=False)
     feed.store_his_tick(storage_path,"SHFE.ni.2201",start_date="20211225",end_date="20220101",skip_saved=False)
     # 读取dsb数据
-    dtHelper = WtDataHelper()
+    dtHelper = ZtDataHelper()
     dtHelper.dump_bars(binFolder="../storage/his/min1/SHFE/", csvFolder="min1_csv")
     dtHelper.dump_ticks(binFolder="../storage/his/ticks/SHFE/20211227/", csvFolder="ticks_csv")

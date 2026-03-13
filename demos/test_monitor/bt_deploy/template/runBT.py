@@ -1,8 +1,8 @@
-from wtpy import BaseCtaStrategy
+from ztpy import BaseCtaStrategy
 import MyStrategy
 
-from wtpy import WtBtEngine,EngineType
-from wtpy.apps import WtBtAnalyst
+from ztpy import ZtBtEngine,EngineType
+from ztpy.apps import ZtBtAnalyst
 
 def getStrategy():
     attrs = dir(MyStrategy)
@@ -20,7 +20,7 @@ def run_bt(fromTime:int, endTime:int, straid:str, init_capital:int=500000, slipp
         return
 
     #创建一个运行环境，并加入策略
-    engine = WtBtEngine(EngineType.ET_CTA)
+    engine = ZtBtEngine(EngineType.ET_CTA)
     engine.init('../common/', "configbt.yaml")
     engine.configBacktest(fromTime, endTime)
     engine.configBTStorage(mode="csv", path="../storage")
@@ -31,7 +31,7 @@ def run_bt(fromTime:int, endTime:int, straid:str, init_capital:int=500000, slipp
 
     engine.run_backtest()
 
-    analyst = WtBtAnalyst()
+    analyst = ZtBtAnalyst()
     analyst.add_strategy(straid, folder="./outputs_bt/%s/" % (straid), init_capital=init_capital, rf=0.02, annual_trading_days=240)
     analyst.run_new()
     analyst.run_simple()

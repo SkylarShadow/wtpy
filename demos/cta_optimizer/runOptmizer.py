@@ -1,4 +1,4 @@
-from wtpy.apps import WtCtaOptimizer
+from ztpy.apps import ZtCtaOptimizer
 
 import sys
 sys.path.append('../Strategies')
@@ -6,7 +6,7 @@ from DualThrust import StraDualThrust
 
 def runBaseOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtCtaOptimizer(worker_num=8)
+    optimizer = ZtCtaOptimizer(worker_num=8)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_strategy(StraDualThrust, "Dt_IF_")
@@ -36,7 +36,7 @@ def runBaseOptimizer():
 
 def runStopLossOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtCtaOptimizer(worker_num=4)
+    optimizer = ZtCtaOptimizer(worker_num=4)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_strategy(StraDualThrust, "Dt_IF_SL_")
@@ -61,7 +61,7 @@ def runStopLossOptimizer():
 
 def runStopProfOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtCtaOptimizer(worker_num=4)
+    optimizer = ZtCtaOptimizer(worker_num=4)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_strategy(StraDualThrust, "Dt_IF_SP_")
@@ -86,7 +86,7 @@ def runStopProfOptimizer():
 
 def runStopAllOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtCtaOptimizer(worker_num=4)
+    optimizer = ZtCtaOptimizer(worker_num=4)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_strategy(StraDualThrust, "Dt_IF_ALL_")

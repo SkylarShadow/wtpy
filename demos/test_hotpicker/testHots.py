@@ -1,4 +1,4 @@
-from wtpy.apps import WtHotPicker, WtCacheMonExchg, WtCacheMonSS, WtMailNotifier
+from ztpy.apps import ZtHotPicker, WtCacheMonExchg, WtCacheMonSS, WtMailNotifier
 import datetime
 import logging
 
@@ -24,7 +24,7 @@ def rebuild_hot_rules():
     # 从datakit落地的行情快照直接读取
     # cacher = WtCacheMonSS("../storage/his/snapshot/")
 
-    picker = WtHotPicker(hotFile="hots.json", secFile="seconds.json")
+    picker = ZtHotPicker(hotFile="hots.json", secFile="seconds.json")
     picker.set_cacher(cacher)
 
     sDate = datetime.datetime.strptime("2019-01-01", '%Y-%m-%d')
@@ -43,7 +43,7 @@ def daily_hot_rules():
     # 从datakit落地的行情快照直接读取
     # cacher = WtCacheMonSS("../storage/his/snapshot/")
 
-    picker = WtHotPicker(hotFile="hots.json", secFile="seconds.json")
+    picker = ZtHotPicker(hotFile="hots.json", secFile="seconds.json")
     picker.set_cacher(cacher)
 
     # notifier = WtMailNotifier(user="yourmailaddr", pwd="yourmailpwd", host="smtp.exmail.qq.com", port=465, isSSL=True)

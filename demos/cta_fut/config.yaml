@@ -41,4 +41,4 @@ bspolicy: actpolicy.yaml    #开平策略配置文件
 
 notifier:
     active: true                    #是否向外发布消息
-    url: ipc:///wtpy/wt_cat_fut.ipc #MQ发布地址，可以根据需要改成自己的地址
+    url: ipc:///ztpy/wt_cat_fut.ipc #MQ发布地址，可以根据需要改成自己的地址

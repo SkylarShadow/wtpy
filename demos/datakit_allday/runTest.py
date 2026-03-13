@@ -1,7 +1,7 @@
 import math
 import time
-from wtpy import BaseExtParser
-from wtpy import WTSTickStruct
+from ztpy import BaseExtParser
+from ztpy import ZTSTickStruct
 from ctypes import byref
 
 # if not exists, install websocket-client v1.2.3+
@@ -13,7 +13,7 @@ import ssl
 
 import datetime
 
-from wtpy import WtDtEngine
+from ztpy import ZtDtEngine
 
 class MyParser(BaseExtParser):
     def __init__(self, id: str, url:str, proxy:dict = None, trace:bool = False):
@@ -30,7 +30,7 @@ class MyParser(BaseExtParser):
         self.oi_cache = dict()
         self.depth_cache = dict()
 
-    def init(self, engine:WtDtEngine):
+    def init(self, engine:ZtDtEngine):
         '''
         初始化
         '''
@@ -135,7 +135,7 @@ class MyParser(BaseExtParser):
                 code = args["instId"]
                 data = root["data"][0]
 
-                curTick = WTSTickStruct()
+                curTick = ZTSTickStruct()
                 curTick.exchg = bytes("OKEX", encoding="UTF8")
                 curTick.code = bytes(code, encoding="UTF8")
 
@@ -245,7 +245,7 @@ class MyParser(BaseExtParser):
 if __name__ == "__main__":
     #创建一个运行环境，并加入策略
     #创建一个运行环境，并加入策略
-    engine = WtDtEngine()
+    engine = ZtDtEngine()
     engine.initialize("dtcfg.yaml", "logcfgdt.yaml")
     
     myParser = MyParser("test", url="wss://ws.okex.com:8443/ws/v5/public", proxy={

@@ -1,4 +1,4 @@
-from wtpy import WtBtEngine, EngineType
+from ztpy import ZtBtEngine, EngineType
 
 import sys
 sys.path.append('../Strategies')
@@ -6,7 +6,7 @@ from HftStraDemo import HftStraDemo
 
 if __name__ == "__main__":
     # 创建一个运行环境，并加入策略
-    engine = WtBtEngine(EngineType.ET_HFT)
+    engine = ZtBtEngine(EngineType.ET_HFT)
     engine.init('../common/', "configbt.yaml")
     engine.configBacktest(202101040900,202101061500)
     engine.configBTStorage(mode="csv", path="../storage/")

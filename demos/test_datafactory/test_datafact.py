@@ -1,8 +1,8 @@
 from ctypes import POINTER
 import datetime
 import os
-from wtpy.WtCoreDefs import WTSBarStruct
-from wtpy.apps.datahelper import DHFactory as DHF
+from ztpy.ZtCoreDefs import ZTSBarStruct
+from ztpy.apps.datahelper import DHFactory as DHF
 
 hlper = DHF.createHelper("baostock")
 hlper.auth()
@@ -35,9 +35,9 @@ hlper.dmpBarsToFile(folder='./', codes=["SZSE.399005","SZSE.399006","SZSE.399303
 # hlper.dmpAdjFactorsToDB(dbHelper, codes=["SSE.600000",'SSE.600001'])
 
 # 将数据直接落地成dsb
-def on_bars_block(exchg:str, stdCode:str, firstBar:POINTER(WTSBarStruct), count:int, period:str):
-    from wtpy.wrapper import WtDataHelper
-    dtHelper = WtDataHelper()
+def on_bars_block(exchg:str, stdCode:str, firstBar:POINTER(ZTSBarStruct), count:int, period:str):
+    from ztpy.wrapper import ZtDataHelper
+    dtHelper = ZtDataHelper()
     if stdCode[-4:] == '.HOT':
         stdCode = stdCode[:-4] + "_HOT"
     else:

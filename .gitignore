@@ -4,7 +4,7 @@
 node_modules/
 /dist/
 /build/*
-/wtpy.egg-info/*
+/ztpy.egg-info/*
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

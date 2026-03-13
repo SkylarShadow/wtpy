@@ -1,9 +1,9 @@
-from wtpy.apps import WtCtaOptimizer
+from ztpy.apps import ZtCtaOptimizer
 
 if __name__ == "__main__":
     #创建一个运行环境，并加入策略
     
-    optimizer = WtCtaOptimizer(8)
+    optimizer = ZtCtaOptimizer(8)
 
     optimizer.analyze(markerfile="strategies.json")
 

@@ -1,8 +1,8 @@
-from wtpy.monitor import WtMonSvr
+from ztpy.monitor import ZtMonSvr
 
-# 如果要配置在线回测，则必须要配置WtDtServo
-# from wtpy import WtDtServo
-# dtServo = WtDtServo()
+# 如果要配置在线回测，则必须要配置ZtDtServo
+# from ztpy import ZtDtServo
+# dtServo = ZtDtServo()
 # dtServo.setBasefiles(commfile="../common/commodities.json", 
 #                 contractfile="../common/contracts.json", 
 #                 holidayfile="../common/holidays.json", 
@@ -12,14 +12,14 @@ from wtpy.monitor import WtMonSvr
 # dtServo.commitConfig()
 
 # 创建监控服务，deploy_dir是策略组合部署的根目录
-svr = WtMonSvr(deploy_dir="./deploy")
+svr = ZtMonSvr(deploy_dir="./deploy")
 
 # 开启令牌访问，这样适合一些跨域访问的场景
 # svr.enable_token(seckey="UM1kbkmdfpRdkBAt")
 
-# 将回测管理模块提交给WtMonSvr
-# from wtpy.monitor import WtBtMon
-# btMon = WtBtMon(deploy_folder="./bt_deploy", logger=svr.logger) # 创建回测管理器
+# 将回测管理模块提交给ZtMonSvr
+# from ztpy.monitor import ZtBtMon
+# btMon = ZtBtMon(deploy_folder="./bt_deploy", logger=svr.logger) # 创建回测管理器
 # svr.set_bt_mon(btMon) # 设置回测管理器
 # svr.set_dt_servo(dtServo) # 设置dtservo
 

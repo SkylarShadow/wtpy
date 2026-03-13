@@ -1,10 +1,10 @@
-from wtpy.wrapper import WtDataHelper
-from wtpy.WtCoreDefs import WTSBarStruct, WTSTickStruct
+from ztpy.wrapper import ZtDataHelper
+from ztpy.ZtCoreDefs import ZTSBarStruct, ZTSTickStruct
 from ctypes import POINTER
-from wtpy.SessionMgr import SessionMgr
+from ztpy.SessionMgr import SessionMgr
 import pandas as pd
 
-dtHelper = WtDataHelper()
+dtHelper = ZtDataHelper()
 
 def test_store_bars():
     df = pd.read_csv('../storage/csv/CFFEX.IF.HOT_m5.csv')
@@ -20,7 +20,7 @@ def test_store_bars():
     df['date'] = df['date'].astype('datetime64').dt.strftime('%Y%m%d').astype('int64')
     df['time'] = (df['date']-19900000)*10000 + df['time'].str.replace(':', '').str[:-2].astype('int')
 
-    BUFFER = WTSBarStruct*len(df)
+    BUFFER = ZTSBarStruct*len(df)
     buffer = BUFFER()
 
     def assign(procession, buffer):
@@ -37,7 +37,7 @@ def test_store_bars():
 def test_store_ticks():
 
     df = pd.read_csv('../storage/csv/rb主力连续_20201030.csv')
-    BUFFER = WTSTickStruct*len(df)
+    BUFFER = ZTSTickStruct*len(df)
     buffer = BUFFER()
 
     tags = ["一","二","三","四","五"]

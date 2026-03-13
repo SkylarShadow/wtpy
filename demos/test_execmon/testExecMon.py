@@ -1,8 +1,8 @@
-from wtpy import WtExecApi
+from ztpy import ZtExecApi
 import time
 
 def test_exec_mon():
-    api = WtExecApi()
+    api = ZtExecApi()
     api.initialize(logCfg = "logcfgexec.yaml")
     api.config(cfgfile = 'cfgexec.yaml')
     api.run()

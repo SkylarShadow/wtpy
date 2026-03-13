@@ -1,14 +1,14 @@
 import time
-from wtpy.ExtModuleDefs import BaseExtDataLoader
+from ztpy.ExtModuleDefs import BaseExtDataLoader
 from ctypes import POINTER
-from wtpy.WtCoreDefs import WTSBarStruct, WTSTickStruct
+from ztpy.ZtCoreDefs import ZTSBarStruct, ZTSTickStruct
 
 import pandas as pd
 
 import random
 
-from wtpy import WtEngine,WtBtEngine,EngineType
-from wtpy.apps import WtBtAnalyst
+from ztpy import ZtEngine,ZtBtEngine,EngineType
+from ztpy.apps import ZtBtAnalyst
 from Strategies.DualThrust import StraDualThrust
 
 class MyDataLoader(BaseExtDataLoader):
@@ -18,7 +18,7 @@ class MyDataLoader(BaseExtDataLoader):
         加载历史K线（回测、实盘）
         @stdCode    合约代码，格式如CFFEX.IF.2106
         @period     周期，m1/m5/d1
-        @feeder     回调函数，feed_raw_bars(bars:POINTER(WTSBarStruct), count:int, factor:double)
+        @feeder     回调函数，feed_raw_bars(bars:POINTER(ZTSBarStruct), count:int, factor:double)
         '''
         print("loading %s bars of %s from extended loader" % (period, stdCode))
 
@@ -35,7 +35,7 @@ class MyDataLoader(BaseExtDataLoader):
         df['date'] = df['date'].astype('datetime64').dt.strftime('%Y%m%d').astype('int64')
         df['time'] = (df['date']-19900000)*10000 + df['time'].str.replace(':', '').str[:-2].astype('int')
 
-        BUFFER = WTSBarStruct*len(df)
+        BUFFER = ZTSBarStruct*len(df)
         buffer = BUFFER()
 
         def assign(procession, buffer):
@@ -55,12 +55,12 @@ class MyDataLoader(BaseExtDataLoader):
         加载历史K线（只在回测有效，实盘只提供当日落地的）
         @stdCode    合约代码，格式如CFFEX.IF.2106
         @uDate      日期，格式如yyyymmdd
-        @feeder     回调函数，feed_raw_ticks(ticks:POINTER(WTSTickStruct), count:int)
+        @feeder     回调函数，feed_raw_ticks(ticks:POINTER(ZTSTickStruct), count:int)
         '''
         print("loading ticks on %d of %s from extended loader" % (uDate, stdCode))
 
         df = pd.read_csv('../storage/csv/rb主力连续_20201030.csv')
-        BUFFER = WTSTickStruct*len(df)
+        BUFFER = ZTSTickStruct*len(df)
         buffer = BUFFER()
 
         tags = ["一","二","三","四","五"]
@@ -98,7 +98,7 @@ class MyDataLoader(BaseExtDataLoader):
         feeder(buffer, len(df))
 
 def test_in_bt():
-    engine = WtBtEngine(EngineType.ET_CTA)
+    engine = ZtBtEngine(EngineType.ET_CTA)
 
     # 初始化之前，向回测框架注册加载器
     engine.set_extended_data_loader(loader=MyDataLoader(), bAutoTrans=False)
@@ -114,7 +114,7 @@ def test_in_bt():
 
     engine.run_backtest()
 
-    analyst = WtBtAnalyst()
+    analyst = ZtBtAnalyst()
     analyst.add_strategy("pydt_IF", folder="./outputs_bt/pydt_IF/", init_capital=500000, rf=0.02, annual_trading_days=240)
     analyst.run()
 
@@ -122,7 +122,7 @@ def test_in_bt():
     engine.release_backtest()
 
 def test_in_rt():
-    engine = WtEngine(EngineType.ET_CTA)
+    engine = ZtEngine(EngineType.ET_CTA)
 
     # 初始化之前，向实盘框架注册加载器
     engine.set_extended_data_loader(MyDataLoader())

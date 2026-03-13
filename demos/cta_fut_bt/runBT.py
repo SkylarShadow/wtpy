@@ -1,5 +1,5 @@
-from wtpy import WtBtEngine,EngineType
-from wtpy.apps import WtBtAnalyst
+from ztpy import ZtBtEngine,EngineType
+from ztpy.apps import ZtBtAnalyst
 
 import sys
 sys.path.append('../Strategies')
@@ -28,7 +28,7 @@ def analyze_with_pyfolio(fund_filename:str, capital:float=500000):
 
 if __name__ == "__main__":
     #创建一个运行环境，并加入策略
-    engine = WtBtEngine(EngineType.ET_CTA)
+    engine = ZtBtEngine(EngineType.ET_CTA)
     engine.init('../common/', "configbt.yaml")
     engine.configBacktest(201909100930,201912011500)
     engine.configBTStorage(mode="csv", path="../storage/")
@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     if True:
         #创建绩效分析模块
-        analyst = WtBtAnalyst()
+        analyst = ZtBtAnalyst()
         #将回测的输出数据目录传递给绩效分析模块
         analyst.add_strategy("pydt_IF", folder="./outputs_bt/", init_capital=500000, rf=0.02, annual_trading_days=240)
         #运行绩效模块

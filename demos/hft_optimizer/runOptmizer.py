@@ -1,11 +1,11 @@
-from wtpy.apps import WtHftOptimizer
+from ztpy.apps import ZtHftOptimizer
 import sys
 import os
 os.chdir(sys.path[0])
 
 def runBaseOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtHftOptimizer(worker_num=1)
+    optimizer = ZtHftOptimizer(worker_num=1)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_cpp_strategy(r"../Strategies/ZtHftStraFact.dll","HftDemo","HFT_")

@@ -1,5 +1,5 @@
 import time
-from wtpy import WtEngine, EngineType
+from ztpy import ZtEngine, EngineType
 
 import sys
 sys.path.append('../Strategies')
@@ -7,7 +7,7 @@ from HftStraDemo import HftStraDemo
 
 if __name__ == "__main__":
     #创建一个运行环境，并加入策略
-    engine = WtEngine(EngineType.ET_HFT)
+    engine = ZtEngine(EngineType.ET_HFT)
 
     #初始化执行环境，传入
     engine.init(folder = '../common/', cfgfile = "config.yaml")

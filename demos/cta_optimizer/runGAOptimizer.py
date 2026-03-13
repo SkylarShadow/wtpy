@@ -1,6 +1,6 @@
 # -- coding: utf-8 --
 
-from wtpy.apps.WtCtaGAOptimizer import WtCtaGAOptimizer
+from ztpy.apps.ZtCtaGAOptimizer import ZtCtaGAOptimizer
 
 import sys
 sys.path.append('../Strategies')
@@ -20,7 +20,7 @@ def runBaseOptimizer():
     ngen_size = 5  # 进化代数
     cx_prb = 0.9  # 交叉概率
     mut_prb = 0.005  # 变异概率
-    optimizer = WtCtaGAOptimizer(worker_num=2,
+    optimizer = ZtCtaGAOptimizer(worker_num=2,
                                  population_size=population_size,
                                  MU=mu,
                                  ngen_size=ngen_size,
@@ -59,7 +59,7 @@ def runBaseOptimizer():
 
 def runStopLossOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtCtaGAOptimizer(worker_num=2)
+    optimizer = ZtCtaGAOptimizer(worker_num=2)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_strategy(StraDualThrust, "Dt_IF_SL_")
@@ -86,7 +86,7 @@ def runStopLossOptimizer():
 
 def runStopProfOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtCtaGAOptimizer(worker_num=4)
+    optimizer = ZtCtaGAOptimizer(worker_num=4)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_strategy(StraDualThrust, "Dt_IF_SP_")
@@ -113,7 +113,7 @@ def runStopProfOptimizer():
 
 def runStopAllOptimizer():
     # 新建一个优化器，并设置最大工作进程数为8
-    optimizer = WtCtaGAOptimizer(worker_num=4)
+    optimizer = ZtCtaGAOptimizer(worker_num=4)
 
     # 设置要使用的策略，只需要传入策略类型即可，同时设置策略ID的前缀，用于区分每个策略的实例
     optimizer.set_strategy(StraDualThrust, "Dt_IF_ALL_")
