@@ -3,8 +3,8 @@ from .ZtCtaOptimizer import ZtCtaOptimizer, OptimizeNotifier
 from .ZtHftOptimizer import ZtHftOptimizer
 from .ZtCtaGAOptimizer import ZtCtaGAOptimizer
 from .ZtCCLoader import ZtCCLoader
-from .ZtHotPicker import ZtHotPicker, WtCacheMonExchg, WtCacheMonSS, WtMailNotifier, WtCacheMon
+from .ZtHotPicker import ZtHotPicker, ZtCacheMonExchg, ZtCacheMonSS, ZtMailNotifier, ZtCacheMon
 
 __all__ = ["ZtBtAnalyst","ZtCtaOptimizer", "ZtHftOptimizer", "ZtHotPicker", 
-        "WtCacheMonExchg", "WtCacheMonSS", "WtMailNotifier", "WtCacheMon", 
+        "ZtCacheMonExchg", "ZtCacheMonSS", "ZtMailNotifier", "ZtCacheMon", 
         "ZtCCLoader","ZtCtaGAOptimizer","OptimizeNotifier"]

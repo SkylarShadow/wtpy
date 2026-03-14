@@ -10,7 +10,7 @@ CB_ON_LOG = CFUNCTYPE(c_void_p,  c_uint32, c_char_p, c_bool)
 @singleton
 class ZtMQWrapper:
     '''
-    Wt平台数据组件C接口底层对接模块
+    平台数据组件C接口底层对接模块
     '''
 
     # api可以作为公共变量

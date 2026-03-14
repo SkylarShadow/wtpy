@@ -9,7 +9,7 @@ import os
 @singleton
 class ZtDtWrapper:
     '''
-    Wt平台数据组件C接口底层对接模块
+    平台数据组件C接口底层对接模块
     '''
 
     # api可以作为公共变量
@@ -55,7 +55,7 @@ class ZtDtWrapper:
         except OSError as oe:
             print(oe)
 
-        self.write_log(102, "WonderTrader datakit initialzied，version: %s" % (self.ver))
+        self.write_log(102, " datakit initialzied，version: %s" % (self.ver))
 
     def create_extended_parser(self, id:str) -> bool:
         return self.api.create_ext_parser(bytes(id, encoding = "utf8"))

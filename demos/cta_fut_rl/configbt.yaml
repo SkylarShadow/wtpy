@@ -8,7 +8,7 @@ replayer:
         uft-8: true
     mode: csv
     store:
-      module: WtDataStorage
+      module: ZtDataStorage
       path: ../storage/
     etime: 201912011500
     stime: 201909010900

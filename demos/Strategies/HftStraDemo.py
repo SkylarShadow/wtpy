@@ -1,5 +1,5 @@
-from wtpy import BaseHftStrategy
-from wtpy import HftContext
+from ztpy import BaseHftStrategy
+from ztpy import HftContext
 
 from datetime import datetime
 

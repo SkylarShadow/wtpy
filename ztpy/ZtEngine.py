@@ -239,7 +239,7 @@ class ZtEngine:
     def configStorage(self, path:str, module:str=""):
         '''
         配置数据存储
-        @mode   存储模式，csv-表示从csv直接读取，一般回测使用，wtp-表示使用wt框架自带数据存储
+        @mode   存储模式，csv-表示从csv直接读取，一般回测使用，ztp-表示使用框架自带数据存储
         '''
         self.__config__["data"]["store"]["module"] = module
         self.__config__["data"]["store"]["path"] = path

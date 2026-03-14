@@ -5,7 +5,7 @@ basefiles:
 #数据存储
 data:
     store:
-        module: WtDataStorageAD     #模块名
+        module: ZtDataStorageAD     #模块名
         path: ../AD_Data/           #数据存储根目录
 #环境配置
 env:

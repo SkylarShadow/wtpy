@@ -1,4 +1,4 @@
-from ztpy.apps import WtCacheMon
+from ztpy.apps import ZtCacheMon
 import rqdatac as rq
 import datetime
 import urllib
@@ -64,7 +64,7 @@ def httpPost(url, datas, encoding='utf-8'):
     except:
         return ""
     
-class RqCacheMonExchg(WtCacheMon):
+class RqCacheMonExchg(ZtCacheMon):
     '''
     米筐数据缓存器
     '''
@@ -179,7 +179,7 @@ if __name__ == '__main__':
     cacher = RqCacheMonExchg(start_date,end_date,"rq_daily_cache.pkl") 
 
     # 从datakit落地的行情快照直接读取
-    # cacher = WtCacheMonSS("../storage/his/snapshot/")
+    # cacher = ZtCacheMonSS("../storage/his/snapshot/")
 
     picker = hotpicker.ZtHotPicker(hotFile=hotFile, secFile=secFile)
     picker.set_cacher(cacher)

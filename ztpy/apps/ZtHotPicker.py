@@ -108,7 +108,7 @@ def httpPost(url, datas, encoding='utf-8'):
     except:
         return ""
 
-class WtCacheMon:
+class ZtCacheMon:
     '''
     缓存管理器基类
     '''
@@ -118,7 +118,7 @@ class WtCacheMon:
     def get_cache(self, exchg, curDT:datetime.datetime):
         pass
 
-class WtCacheMonExchg(WtCacheMon):
+class ZtCacheMonExchg(ZtCacheMon):
     '''
     交易所行情缓存器
     通过到交易所官网上拉取当日的行情快照，缓存当日行情数据
@@ -402,15 +402,15 @@ class WtCacheMonExchg(WtCacheMon):
 
         cacheItem = self.day_cache[dtStr]
         if exchg == 'CFFEX':
-            cacheItem[exchg] = WtCacheMonExchg.getCffexData(curDT)
+            cacheItem[exchg] = ZtCacheMonExchg.getCffexData(curDT)
         elif exchg  == 'SHFE':
-            cacheItem[exchg] = WtCacheMonExchg.getShfeData(curDT)
+            cacheItem[exchg] = ZtCacheMonExchg.getShfeData(curDT)
         elif exchg  == 'DCE':
-            cacheItem[exchg] = WtCacheMonExchg.getDceData(curDT)
+            cacheItem[exchg] = ZtCacheMonExchg.getDceData(curDT)
         elif exchg  == 'CZCE':
-            cacheItem[exchg] = WtCacheMonExchg.getCzceData(curDT)
+            cacheItem[exchg] = ZtCacheMonExchg.getCzceData(curDT)
         elif exchg  == 'INE':
-            cacheItem[exchg] = WtCacheMonExchg.getIneData(curDT)
+            cacheItem[exchg] = ZtCacheMonExchg.getIneData(curDT)
         else:
             raise Exception("未知交易所代码" + exchg)
 
@@ -432,7 +432,7 @@ class WtCacheMonExchg(WtCacheMon):
             return None
         return self.day_cache[dtStr][exchg]
 
-class WtCacheMonSS(WtCacheMon):
+class ZtCacheMonSS(ZtCacheMon):
     '''
     快照缓存管理器
     通过读取ztpy的datakit当日生成的快照文件，缓存当日行情数据
@@ -440,7 +440,7 @@ class WtCacheMonSS(WtCacheMon):
     '''
 
     def __init__(self, snapshot_path:str):
-        WtCacheMon.__init__(self)
+        ZtCacheMon.__init__(self)
         self.snapshot_path = snapshot_path
 
     def cache_snapshot(self, curDT:datetime):
@@ -505,14 +505,14 @@ class WtCacheMonSS(WtCacheMon):
             return None
         return self.day_cache[dtStr][exchg]
 
-class WtMailNotifier:
+class ZtMailNotifier:
     '''
     邮件通知器
     '''
     def __init__(self, user:str, pwd:str, sender:str=None, host:str="smtp.exmail.qq.com", port=465, isSSL:bool = True):
         self.user = user
         self.pwd = pwd
-        self.sender = sender if sender is not None else "WtHotNotifier<%s>" % (user)
+        self.sender = sender if sender is not None else "ZtHotNotifier<%s>" % (user)
         self.receivers = list()
 
         self.mail_host = host
@@ -623,19 +623,19 @@ class ZtHotPicker:
         self.hot_file = hotFile
         self.sec_file = secFile
 
-        self.mail_notifier:WtMailNotifier = None
-        self.cache_monitor:WtCacheMon = None
+        self.mail_notifier:ZtMailNotifier = None
+        self.cache_monitor:ZtCacheMon = None
 
         self.current_hots = None
         self.current_secs = None
 
-    def set_cacher(self, cacher:WtCacheMon):
+    def set_cacher(self, cacher:ZtCacheMon):
         '''
         设置日行情缓存器
         '''
         self.cache_monitor = cacher
         
-    def set_mail_notifier(self, notifier:WtMailNotifier):
+    def set_mail_notifier(self, notifier:ZtMailNotifier):
         '''
         设置邮件通知器
         '''

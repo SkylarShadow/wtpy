@@ -1,10 +1,5 @@
 '''
-Descripttion: HFT参数寻优模块
-version: 
-Author: HeJ
-Date: 2022-06-22 14:03:33
-LastEditors: Wesley
-LastEditTime: 2022-06-22 14:03:33
+HFT参数寻优模块
 '''
 import multiprocessing
 import json

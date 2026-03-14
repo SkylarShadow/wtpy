@@ -1,5 +1,5 @@
-from wtpy import BaseSelStrategy
-from wtpy import SelContext
+from ztpy import BaseSelStrategy
+from ztpy import SelContext
 import numpy as np
 
 

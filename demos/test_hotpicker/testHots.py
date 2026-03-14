@@ -1,4 +1,4 @@
-from ztpy.apps import ZtHotPicker, WtCacheMonExchg, WtCacheMonSS, WtMailNotifier
+from ztpy.apps import ZtHotPicker, ZtCacheMonExchg, ZtCacheMonSS, ZtMailNotifier
 import datetime
 import logging
 
@@ -19,10 +19,10 @@ def rebuild_hot_rules():
     重构全部的主力合约切换规则
     '''
     # 从交易所官网拉取行情快照
-    cacher = WtCacheMonExchg()  
+    cacher = ZtCacheMonExchg()  
 
     # 从datakit落地的行情快照直接读取
-    # cacher = WtCacheMonSS("../storage/his/snapshot/")
+    # cacher = ZtCacheMonSS("../storage/his/snapshot/")
 
     picker = ZtHotPicker(hotFile="hots.json", secFile="seconds.json")
     picker.set_cacher(cacher)
@@ -38,15 +38,15 @@ def daily_hot_rules():
     增量更新主力合约切换规则
     '''
     # 从交易所官网拉取行情快照
-    cacher = WtCacheMonExchg()  
+    cacher = ZtCacheMonExchg()  
 
     # 从datakit落地的行情快照直接读取
-    # cacher = WtCacheMonSS("../storage/his/snapshot/")
+    # cacher = ZtCacheMonSS("../storage/his/snapshot/")
 
     picker = ZtHotPicker(hotFile="hots.json", secFile="seconds.json")
     picker.set_cacher(cacher)
 
-    # notifier = WtMailNotifier(user="yourmailaddr", pwd="yourmailpwd", host="smtp.exmail.qq.com", port=465, isSSL=True)
+    # notifier = ZtMailNotifier(user="yourmailaddr", pwd="yourmailpwd", host="smtp.exmail.qq.com", port=465, isSSL=True)
     # notifier.add_receiver(name="receiver1", addr="receiver1@qq.com")
     # picker.set_mail_notifier(notifier)
 

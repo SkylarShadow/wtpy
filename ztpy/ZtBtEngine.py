@@ -192,7 +192,7 @@ class ZtBtEngine:
     def configBTStorage(self, mode:str, path:str = None, storage:dict = None):
         '''
         配置数据存储
-        @mode   存储模式,csv-表示从csv直接读取,一般回测使用,wtp-表示使用wt框架自带数据存储
+        @mode   存储模式,csv-表示从csv直接读取,一般回测使用,ztp-表示使用框架自带数据存储
         '''
         self.__config__["replayer"]["mode"] = mode
         if path is not None:

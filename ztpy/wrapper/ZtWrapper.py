@@ -17,7 +17,7 @@ import os
 @singleton
 class ZtWrapper:
     '''
-    Wt平台C接口底层对接模块
+    平台C接口底层对接模块
     '''
 
     # api可以作为公共变量
@@ -453,7 +453,7 @@ class ZtWrapper:
         except OSError as oe:
             print(oe)
 
-        self.write_log(102, "WonderTrader CTA production framework initialzied, version: %s" % (self.ver))
+        self.write_log(102, " CTA production framework initialzied, version: %s" % (self.ver))
 
     def initialize_hft(self, logCfg:str = "logcfg.yaml", isFile:bool = True, genDir:str = 'generated'):
         '''
@@ -483,7 +483,7 @@ class ZtWrapper:
         except OSError as oe:
             print(oe)
 
-        self.write_log(102, "WonderTrader HFT production framework initialzied, version: %s" % (self.ver))
+        self.write_log(102, " HFT production framework initialzied, version: %s" % (self.ver))
 
     def initialize_sel(self, logCfg:str = "logcfg.yaml", isFile:bool = True, genDir:str = 'generated'):
         '''
@@ -505,7 +505,7 @@ class ZtWrapper:
         except OSError as oe:
             print(oe)
 
-        self.write_log(102, "WonderTrader SEL production framework initialzied, version: %s" % (self.ver))
+        self.write_log(102, " SEL production framework initialzied, version: %s" % (self.ver))
 
     def cta_enter_long(self, id:int, stdCode:str, qty:float, usertag:str, limitprice:float = 0.0, stopprice:float = 0.0):
         '''

@@ -1,4 +1,4 @@
-from wtpy.apps.datahelper.DHDefs import DBHelper
+from ztpy.apps.datahelper.DHDefs import DBHelper
 import pymysql
 import math
 import os

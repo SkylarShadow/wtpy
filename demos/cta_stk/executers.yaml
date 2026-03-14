@@ -8,7 +8,7 @@ executers:
 
     policy:         #执行单元分配策略，系统根据该策略创建对一个的执行单元
         default:    #默认策略，根据品种ID设置，如SHFE.rb，如果没有针对品种设置，则使用默认策略
-            name: WtExeFact.WtMinImpactExeUnit #执行单元名称
+            name: ZtExeFact.ZtMinImpactExeUnit #执行单元名称
             offset: 0       #委托价偏移跳数
             expire: 5       #订单超时没秒数
             pricemode: 1    #基础价格模式，-1-己方最优，0-最新价，1-对手价

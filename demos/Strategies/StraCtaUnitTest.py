@@ -1,5 +1,5 @@
-from wtpy import BaseCtaStrategy
-from wtpy import CtaContext
+from ztpy import BaseCtaStrategy
+from ztpy import CtaContext
 import numpy as np
 
 
@@ -107,10 +107,10 @@ class StraCtaUnitTest(BaseCtaStrategy):
         context.stra_log_text('当前时间:{}'.format(test_time))
         # 输出日志
         context.stra_log_text('输出日志测试:123456')
-        # 获取K线数据 返回值 wtklinedata对象
+        # 获取K线数据 返回值 ztklinedata对象
         tbars = context.stra_get_bars(code, self.__period__, self.__bar_cnt__, True)
         context.stra_log_text('K线数据,最高价:{}'.format(tbars.highs))
-        # 获取tick数据 返回值  wthftdata对象
+        # 获取tick数据 返回值  zthftdata对象
         test_ticks = context.stra_get_ticks(code, 10)
         context.stra_log_text('tick数据:{}'.format(test_ticks))
         # 订阅实时行情 返回值  实时行情

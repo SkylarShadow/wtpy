@@ -12,7 +12,7 @@ CB_DATA_COUNT = CFUNCTYPE(c_void_p,  c_uint32)
 @singleton
 class ZtDtServoApi:
     '''
-    Wt平台数据组件C接口底层对接模块
+    平台数据组件C接口底层对接模块
     '''
 
     # api可以作为公共变量

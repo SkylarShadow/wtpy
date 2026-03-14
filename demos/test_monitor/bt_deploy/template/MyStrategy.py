@@ -1,5 +1,5 @@
-from wtpy import BaseCtaStrategy
-from wtpy import CtaContext
+from ztpy import BaseCtaStrategy
+from ztpy import CtaContext
 
 class MyStrategy(BaseCtaStrategy):
     

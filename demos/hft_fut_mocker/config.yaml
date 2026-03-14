@@ -22,7 +22,7 @@ env:
         calc_span: 5
         inner_day_active: true
         inner_day_fd: 20.0
-        module: WtRiskMonFact
+        module: ZtRiskMonFact
         multi_day_active: false
         multi_day_fd: 60.0
         name: SimpleRiskMon

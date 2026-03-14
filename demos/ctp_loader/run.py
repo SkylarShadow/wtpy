@@ -1,5 +1,5 @@
 import time
-from wtpy import ContractLoader,LoaderType
+from ztpy import ContractLoader,LoaderType
 
 loader = ContractLoader(lType = LoaderType.LT_CTP)
 print('press ctrl-c to exit')

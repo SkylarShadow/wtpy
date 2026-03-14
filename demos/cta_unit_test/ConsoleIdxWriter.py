@@ -1,5 +1,5 @@
 import json
-from wtpy import BaseIndexWriter
+from ztpy import BaseIndexWriter
 
 class ConsoleIdxWriter(BaseIndexWriter):
     '''

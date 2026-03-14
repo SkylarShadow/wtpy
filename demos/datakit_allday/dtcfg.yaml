@@ -14,7 +14,7 @@ shmcaster:                      # 共享内存转发，适合本机转发
 allday: true
 writer:
     async: false
-    module: WtDataStorageAD
+    module: ZtDataStorageAD
     groupsize: 20
     path: ../AD_Data
     savelog: false

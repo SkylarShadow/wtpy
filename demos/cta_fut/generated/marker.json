@@ -1,0 +1,12 @@
+{
+    "marks": [
+        "pydt_IF"
+    ],
+    "channels": [
+        "simnow"
+    ],
+    "executers": [
+        "exec"
+    ],
+    "engine": "CTA"
+}

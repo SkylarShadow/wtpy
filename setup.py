@@ -13,17 +13,17 @@ from setuptools import find_packages, setup, Command, Distribution
 
 # Package meta-data.
 NAME = 'ztpy'
-DESCRIPTION = 'Python Sub Framework Of WonderTrader'
-URL = 'https://github.com/wondertrader/ztpy'
-EMAIL = 'silencesword@foxmail.com'
-AUTHOR = 'Wesley Liu'
+DESCRIPTION = 'ZorroTrader python version'
+URL = ''
+EMAIL = ''
+AUTHOR = ''
 REQUIRES_PYTHON = '>=3.8.0'
-VERSION = '0.9.9.3'
+VERSION = '0.0.0.1'
 
 # What packages are required for this module to be executed?
 REQUIRED = [
     'numpy', 
-    'pandas==1.3.5',     
+    'pandas',     
     'chardet',
     'pyyaml',
     'xlsxwriter', 
@@ -49,11 +49,12 @@ here = os.path.abspath(os.path.dirname(__file__))
 
 # Import the README and use it as the long-description.
 # Note: this will only work if 'README.md' is present in your MANIFEST.in file!
-try:
-    with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
-        long_description = '\n' + f.read()
-except FileNotFoundError:
-    long_description = DESCRIPTION
+# TODO 添加readme
+# try:
+#     with io.open(os.path.join(here, 'README.md'), encoding='utf-8') as f:
+#         long_description = '\n' + f.read()
+# except FileNotFoundError:
+#     long_description = DESCRIPTION
 
 # Load the package's __version__.py module as a dictionary.
 about = {}
@@ -111,7 +112,7 @@ setup(
     name=NAME,
     version=about['__version__'],
     description=DESCRIPTION,
-    long_description=long_description,
+    #long_description=long_description, #todo readme 相关
     long_description_content_type='text/markdown',
     author=AUTHOR,
     author_email=EMAIL,

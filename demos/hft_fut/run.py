@@ -13,7 +13,7 @@ if __name__ == "__main__":
     engine.init(folder = '../common/', cfgfile = "config.yaml")
 
     #设置数据存储目录
-    # engine.configStorage(module="", path="D:\\WTP_Data\\")
+    # engine.configStorage(module="", path="D:\\ZTP_Data\\")
 
     #注册CTA策略工厂，即C++的CTA策略工厂模块所在的目录
     # engine.regCtaStraFactories(factFolder = ".\\cta\\")
@@ -21,7 +21,7 @@ if __name__ == "__main__":
     #添加外部CTA策略，即C++版本的CTA策略
     '''
     engine.addExternalHftStrategy(id = "cppxpa_rb", params = {
-        "name":"WtCtaStraFact.DualThrust",  #工厂名.策略名
+        "name":"ZtCtaStraFact.DualThrust",  #工厂名.策略名
         "params":{  #这是策略所需要的参数
             "code":"SHFE.rb.HOT",
             "period":"m3",

@@ -75,7 +75,7 @@ class ZtCCLoader:
                     cInfo["code"] = item["instId"]
                     cInfo["exchg"] = "OKEX"
 
-                    #这些是wt不用的额外信息，做一个保存
+                    #不用的额外信息，做一个保存
                     extInfo = dict()
                     extInfo["instType"] = iType
                     extInfo["baseCcy"] = item["baseCcy"]    
@@ -145,7 +145,7 @@ class ZtCCLoader:
                 
             tMode = 1 if iType=='SPOT' else 0 #0-多空, 1-做多, 2-做多T+1
 
-            #这些是wt不用的额外信息，做一个保存
+            #不用的额外信息，做一个保存
             extInfo = dict()
             extInfo["instType"] = iType
             extInfo["baseAsset"] = item["baseAsset"]    
@@ -219,7 +219,7 @@ class ZtCCLoader:
                 iType = "FUTURES"
             tMode = 0 #0-多空, 1-做多, 2-做多T+1
 
-            #这些是wt不用的额外信息，做一个保存
+            #不用的额外信息，做一个保存
             extInfo = dict()
             extInfo["instType"] = iType
             extInfo["baseAsset"] = item["baseAsset"]    
@@ -298,7 +298,7 @@ class ZtCCLoader:
                 iType = "FUTURES"
             tMode = 0 #0-多空, 1-做多, 2-做多T+1
 
-            #这些是wt不用的额外信息，做一个保存
+            #不用的额外信息，做一个保存
             extInfo = dict()
             extInfo["instType"] = iType
             extInfo["baseAsset"] = item["baseAsset"]    
@@ -386,7 +386,7 @@ class ZtCCLoader:
 
             tMode = 1 if iType=='SPOT' else 0 #0-多空, 1-做多, 2-做多T+1
 
-            #这些是wt不用的额外信息，做一个保存
+            #这些是zt不用的额外信息，做一个保存
             extInfo = dict()
             extInfo["instType"] = iType
             extInfo["baseCurrency"] = item["baseCurrency"]    

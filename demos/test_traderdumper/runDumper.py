@@ -1,4 +1,4 @@
-from wtpy import TraderDumper,DumperSink
+from ztpy import TraderDumper,DumperSink
 
 class MySink(DumperSink):
 
