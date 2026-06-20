@@ -21,5 +21,8 @@ class DHFactory:
         elif name == "tqsdk":
             from ztpy.apps.datahelper.DHTqSdk import DHTqSdk
             return DHTqSdk()
+        elif name == "tdx":
+            from ztpy.apps.datahelper.DHTdx import DHTdx
+            return DHTdx()
         else:
             raise Exception("Cannot recognize helper with name %s" % (name))
