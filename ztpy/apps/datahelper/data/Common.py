@@ -82,7 +82,7 @@ def get_stk_code_name_list(market: str) -> list:
             tmp_df = ak.stock_info_sz_name_code(ind)
             tmp_df.rename(columns={'A股代码': 'code', 'A股简称': 'name'}, inplace=True)
             df = pd.concat([df, tmp_df]) if df is not None else tmp_df
-        print("获取深圳证券交易所股票数量: {}", len(df) if df is not None else 0)
+        zt_info("获取深圳证券交易所股票数量: {}", len(df) if df is not None else 0)
         return df[['code', 'name']].to_dict(orient='records') if df is not None else []
 
     # 获取上证股票代码表
