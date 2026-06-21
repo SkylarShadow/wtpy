@@ -4,6 +4,7 @@ from ztpy.apps.datahelper.DHDefs import BaseDataHelper, DBHelper
 from ztpy.ZtCoreDefs import ZTSBarStruct
 from datetime import datetime
 from pytdx.hq import TdxHq_API
+from pytdx.util.best_ip import select_best_ip
 from pytdx.params import TDXParams
 from collections import OrderedDict
 import json
@@ -13,9 +14,14 @@ import pickle
 
 # ========== K线类型映射（统一管理） ==========
 
+MARKET_TO_CACHE_KEY = {
+    TDXParams.MARKET_SH: "SH",
+    TDXParams.MARKET_SZ: "SZ",
+}
+
 PERIOD_TO_KTYPE = {
-    "min1":  8,
-    "min5":  0,
+    "min1":  8, # 经测试，最多支持最新的21600条，当然可能不同服务器不同
+    "min5":  0, # 24000条左右
     "min15": 1,
     "min30": 2,
     "hour1": 3,
@@ -180,9 +186,15 @@ def _is_index(code: str, market: int) -> bool:
     except Exception as e:
         zt_error(f"Failed to refresh cache in _is_index: {e}")
     
+    # 使用缓存判断
     if _stock_code_cache and _index_code_cache:
-        if any(code in codes for codes in _stock_code_cache.values()):
-            return False
+        # 检查是否在对应市场的股票缓存中
+        cache_key = MARKET_TO_CACHE_KEY.get(market)
+        if cache_key and cache_key in _stock_code_cache:
+            if code in _stock_code_cache[cache_key]:
+                return False
+        
+        # 检查是否在指数缓存中
         if code in _index_code_cache:
             return True
         zt_debug(f"Code {code} not found in cache, using rule-based判断")
@@ -251,20 +263,57 @@ def _std_to_tdx_market(stdCode: str):
 
 
 def _parse_bar_item(item, ktype: int):
+    """
+    解析 pytdx 返回的 bar 数据项
+    """
     try:
         if isinstance(item, (dict, OrderedDict)):
-            year, month, day = int(item.get("year", 0)), int(item.get("month", 0)), int(item.get("day", 0))
-            date_int = year * 10000 + month * 100 + day
-            time_val = 0 if _is_daily_or_above(ktype) else int(item.get("hour", 0)) * 100 + int(item.get("minute", 0))
+            # 使用 datetime 字段解析，更可靠
+            datetime_str = item.get("datetime", "")
+            
+            if datetime_str:
+                # datetime 格式: "2024-01-27 09:15"
+                parts = datetime_str.split(" ")
+                date_part = parts[0]  # "2024-01-27"
+                time_part = parts[1] if len(parts) > 1 else "00:00"  # "09:15"
+                
+                date_int = int(date_part.replace("-", ""))  # 20240127
+                
+                if _is_daily_or_above(ktype):
+                    time_val = 0
+                else:
+                    # 分钟线：HHMM 格式
+                    hh, mm = time_part.split(":")
+                    time_val = int(hh) * 100 + int(mm)  # 0915
+            else:
+                # 备选：使用 year/month/day/hour/minute 字段
+                year = int(item.get("year", 0))
+                month = int(item.get("month", 0))
+                day = int(item.get("day", 0))
+                date_int = year * 10000 + month * 100 + day
+                
+                if _is_daily_or_above(ktype):
+                    time_val = 0
+                else:
+                    hour = int(item.get("hour", 0))
+                    minute = int(item.get("minute", 0))
+                    time_val = hour * 100 + minute
+            
             return {
-                "date": date_int, "time": time_val,
-                "open": float(item.get("open", 0)), "high": float(item.get("high", 0)),
-                "low": float(item.get("low", 0)), "close": float(item.get("close", 0)),
-                "vol": float(item.get("vol", 0)), "amount": float(item.get("amount", 0))
+                "date": date_int,
+                "time": time_val,
+                "open": float(item.get("open", 0)),
+                "high": float(item.get("high", 0)),
+                "low": float(item.get("low", 0)),
+                "close": float(item.get("close", 0)),
+                "vol": float(item.get("vol", 0)),
+                "amount": float(item.get("amount", 0))
             }
         else:
+            # tuple 格式（备选）
             if len(item) < 4:
                 return None
+            
             y, m, d = int(item[0]), int(item[1]), int(item[2])
             date_int = y * 10000 + m * 100 + d
             
@@ -272,11 +321,15 @@ def _parse_bar_item(item, ktype: int):
                 time_val = 0
                 o, h, l, c, v, a = item[3:9] if len(item) > 8 else (0,)*6
             else:
-                time_val = (int(item[3]) if len(item) > 3 else 0) * 100 + (int(item[4]) if len(item) > 4 else 0)
-                o, h, l, c, v, a = (item[i] if len(item) > i else 0 for i in range(5, 11))
+                # 分钟线 tuple: (year, month, day, hour, minute, open, high, low, close, volume, amount)
+                hour = int(item[3]) if len(item) > 3 else 0
+                minute = int(item[4]) if len(item) > 4 else 0
+                time_val = hour * 100 + minute
+                o, h, l, c, v, a = (float(item[i]) if len(item) > i else 0 for i in range(5, 11))
             
             return {
-                "date": date_int, "time": time_val,
+                "date": date_int,
+                "time": time_val,
                 "open": float(o), "high": float(h), "low": float(l), "close": float(c),
                 "vol": float(v), "amount": float(a)
             }
@@ -290,6 +343,7 @@ def _fetch_bars(api, ktype: int, market: int, code: str,
     all_bars = []
     pos = 0
     count = 800
+    total_fetched = 0 # 数据条数
     
     while True:
         try:
@@ -314,6 +368,19 @@ def _fetch_bars(api, ktype: int, market: int, code: str,
             zt_warn(f"Too many bars fetched for code={code}, breaking")
             break
     
+    
+        # 如果翻遍了所有数据都没找到目标范围内的数据
+    if total_fetched > 0 and len(all_bars) == 0:
+        zt_error(
+            f"No bars found in range [{start_int}, {end_int}] for code={code}. "
+            f"Fetched {total_fetched} bars total, but none matched the date range."
+        )
+    elif len(all_bars) == 0:
+        zt_error(
+            f"No data at all for code={code} in range [{start_int}, {end_int}]. "
+            f"The server returned no bars."
+        )
+    
     # 去重排序
     seen = {}
     for bar in all_bars:
@@ -324,41 +391,79 @@ def _fetch_bars(api, ktype: int, market: int, code: str,
 
 
 # ========== 复权因子提取（公共函数） ==========
-
+#TODO: 目前是摊薄因子，数据不够没办法算复权
 def _extract_adjust_factors(xdxr_data) -> list:
     """从 get_xdxr_info 返回数据中提取复权因子列表"""
     factors = []
     if not xdxr_data:
         return [{"date": 19900101, "factor": 1.0}]
     
+    # 首先添加一个初始因子（1990年1月1日，因子为1.0）
+    factors.append({"date": 19900101, "factor": 1.0})
+    
     for item in xdxr_data:
         try:
-            if isinstance(item, dict):
-                date = item.get("date", item.get("exdate", ""))
-                factor = item.get("factor", item.get("adj_factor", 1.0))
-            else:
-                date = str(item[0]) if len(item) > 0 else ""
-                factor = float(item[-1]) if len(item) > 0 else 1.0
+            if not isinstance(item, (dict, OrderedDict)):
+                zt_debug(f"Unexpected xdxr item type: {type(item)}, value: {item}")
+                continue
             
-            if date:
-                date_int = int(str(date).replace("-", ""))
-                factors.append({"date": date_int, "factor": float(factor)})
+            # 提取日期 - 使用 year, month, day 字段
+            year = int(item.get("year", 0))
+            month = int(item.get("month", 0))
+            day = int(item.get("day", 0))
+            
+            if year == 0 or month == 0 or day == 0:
+                continue
+            
+            date_int = year * 10000 + month * 100 + day
+            
+            # 计算复权因子
+            qian = float(item.get("qianzongguben", 0) or 0)
+            hou = float(item.get("houzongguben", 0) or 0)
+            
+            # 如果总股本数据不可用，尝试使用流通股本
+            if qian == 0 and hou == 0:
+                qian = float(item.get("panqianliutong", 0) or 0)
+                hou = float(item.get("panhouliutong", 0) or 0)
+            
+            # 计算复权因子
+            if qian > 0 and hou > 0 and qian != hou:
+                factor = hou / qian
+            elif qian == 0 and hou > 0:
+                factor = 1.0
+            else:
+                # 没有股本变化，跳过
+                continue
+            
+            factors.append({"date": date_int, "factor": round(factor, 6)})
+            
         except Exception as e:
-            zt_debug(f"Parse xdxr item failed: {e}")
+            import traceback
+            zt_debug(f"Parse xdxr item failed: {e}\n{traceback.format_exc()}\nitem={item}")
             continue
     
-    if not factors:
-        factors.append({"date": 19900101, "factor": 1.0})
-    
+    # 按日期排序
     factors.sort(key=lambda x: x["date"])
     
-    # 去重连续的相同因子
-    cleaned = []
-    prev = None
+    # 累积计算复权因子
+    accumulated_factors = []
+    accumulated = 1.0
+    
     for f in factors:
-        if f["factor"] != prev:
+        accumulated = accumulated * f["factor"]
+        accumulated_factors.append({
+            "date": f["date"],
+            "factor": round(accumulated, 6)
+        })
+    
+    # 去除连续的重复因子
+    cleaned = []
+    prev_factor = None
+    for f in accumulated_factors:
+        if f["factor"] != prev_factor:
             cleaned.append(f)
-            prev = f["factor"]
+            prev_factor = f["factor"]
+    
     return cleaned
 
 
@@ -430,6 +535,12 @@ def _fetch_and_process_bars(api, stdCode: str, period: str,
     is_index = _is_index(code, market)
     
     bars = _fetch_bars(api, ktype, market, code, start_int, end_int, is_index)
+    
+    if not bars:
+        zt_error(
+            f"No {period} bars for {stdCode} in [{start_int}, {end_int}]. "
+            f"market={market}, ktype={ktype}, is_index={is_index}"
+        )
     return exchg, code, bars, is_day
 
 
@@ -451,9 +562,13 @@ def _process_adjust_factors(api, codes: list) -> dict:
         
         try:
             xdxr_data = api.get_xdxr_info(market, code)
+            
             factors = _extract_adjust_factors(xdxr_data)
+            
         except Exception as e:
+            import traceback
             zt_warn(f"Failed to get xdxr info for {stdCode}: {e}")
+            zt_debug(f"Traceback: {traceback.format_exc()}")
             factors = [{"date": 19900101, "factor": 1.0}]
         
         if exchg not in stocks:
@@ -464,7 +579,21 @@ def _process_adjust_factors(api, codes: list) -> dict:
 
 
 # ========== DHTdx 类 ==========
-
+def auto_get_best_ip_and_data():
+    """
+    自动选择最优服务器并获取股票数据的完整示例
+    """
+    # 1. 自动选择最佳行情服务器
+    print("正在自动测试最优服务器...")
+    try:
+        best_ip_info = select_best_ip()
+        best_ip = best_ip_info['ip']
+        best_port = best_ip_info['port']
+        print(f"✅ 找到最优服务器: {best_ip}:{best_port}")
+    except Exception as e:
+        print(f"❌ 自动选择最优服务器时发生错误: {e}")
+        return None
+    
 class DHTdx(BaseDataHelper):
 
     def __init__(self):
